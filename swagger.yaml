@@ -83,17 +83,17 @@ paths:
           properties:
             genres:
               type: "object"
-              properties:
-                mrs-genre-<int>:
-                  type: "integer"
-                  default: 0
+              additionalProperties:
+                type: "string"
             order:
               type: "string"
+              default: "rank"
               enum:
               - "rank"
               - "name"
             rank:
               type: "string"
+              default: "all"
               enum:
               - "all"
               - "1-999"
@@ -101,10 +101,16 @@ paths:
               - "2000-3000"
             status:
               type: "string"
+              default: "all"
               enum:
               - "all"
               - "completed"
               - "ongoing"
+          example:
+            genres: {}
+            order: "all"
+            rank: "all"
+            status: "all"
       responses:
         200:
           description: ""
@@ -170,6 +176,24 @@ paths:
               type: "array"
               items:
                 $ref: "#/definitions/section"
+          example:
+            oids:
+              mrs-serie-100159890: 0
+            sections:
+            - "basic_info"
+            - "summary"
+            - "artworks"
+            - "sub_genres"
+            - "social_stats"
+            - "author"
+            - "character"
+            - "publisher"
+            - "scanlator"
+            - "other_fact"
+            - "chapters"
+            - "related_series"
+            - "same_author"
+            - "feature_collections"
       responses:
         200:
           description: ""
