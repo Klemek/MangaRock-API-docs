@@ -28,8 +28,7 @@ paths:
             type: "object"
             properties:
               code:
-                type: "integer"
-                default: 0
+                $ref: "#/definitions/return-code"
               data:
                 type: "array"
                 items:
@@ -78,24 +77,50 @@ paths:
             type: "object"
             properties:
               code:
-                type: "integer"
-                default: 0
+                $ref: "#/definitions/return-code"
               data:
                 type: "array"
                 items:
-                  type: "mrs-serie-<int>"
+                  $ref: "#/definitions/serie-oid"
 definitions:
+  return-code:
+    type: "integer"
+    default: 0
+  serie-oid:
+    type: "string"
+    default: "mrs-serie-<int>"
+  chapter-oid:
+    type: "string"
+    default: "mrs-chapter-<int>"
+  genre-oid:
+    type: "string"
+    default: "mrs-genre-<int>"
+  author-oid:
+    type: "string"
+    default: "mrs-author-<int>"
+  character-oid:
+    type: "string"
+    default: "mrs-character-<int>"
+  collection-oid:
+    type: "string"
+    default: "mrs-collection-<int>"
+  jpeg-url:
+    type: "string"
+    default: "https://f01.mrcdn.info/file/mrportal/<>.jpg"
+  mri-url:
+    type: "string"
+    default: "https://f01.mrcdn.info/file/mrportal/<>.mri"
   serie:
     type: "object"
     properties:
       oid:
-        type: "mrs-serie-<int>"
+        $ref: "#/definitions/serie-oid"
       name:
         type: "string"
       genres:
         type: "array"
         items:
-          type: "mrs-genre-<int>"
+          $ref: "#/definitions/genre-oid"
       rank:
         type: "integer"
       updated_chapter:
@@ -106,7 +131,7 @@ definitions:
           type: "object"
           properties:
             oid:
-              type: "mrs-chapter-<int>"
+              $ref: "#/definitions/chapter-oid"
             name:
               type: "string"
             updatedAt:
@@ -114,8 +139,9 @@ definitions:
               format: "date-time"
       completed:
         type: "boolean"
+        default: false
       thumbnail:
-        type: "jpeg url"
+        $ref: "#/definitions/jpeg-url"
       updated_at:
         type: "string"
         format: "date-time"
