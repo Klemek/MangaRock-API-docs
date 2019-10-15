@@ -22,8 +22,6 @@ paths:
       - "list"
       summary: "Latest updates"
       description: ""
-      produces:
-      - "application/json"
       responses:
         200:
           schema:
@@ -36,6 +34,57 @@ paths:
                 type: "array"
                 items:
                   $ref: "#/definitions/serie"
+  /mrs_filter:
+    post:
+      tags:
+      - "list"
+      summary: "All manga available on the web site"
+      description: ""
+      parameters:
+      - in: "body"
+        name: "body"
+        description: ""
+        required: true
+        schema:
+          type: "object"
+          properties:
+            genres:
+              type: "object"
+              properties:
+                mrs-genre-<int>:
+                  type: "integer"
+                  default: 0
+            order:
+              type: "string"
+              enum:
+              - "rank"
+              - "name"
+            rank:
+              type: "string"
+              enum:
+              - "all"
+              - "1-999"
+              - "1000-2000"
+              - "2000-3000"
+            status:
+              type: "string"
+              enum:
+              - "all"
+              - "completed"
+              - "ongoing"
+      responses:
+        200:
+          schema:
+            type: "object"
+            properties:
+              code:
+                type: "integer"
+                default: 0
+              data:
+                type: "array"
+                items:
+                  type: "string"
+                  default: "mrs-serie-<int>"
 definitions:
   serie:
     type: "object"
