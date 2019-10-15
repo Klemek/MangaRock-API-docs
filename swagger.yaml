@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  description: "MangaRock API documentation\nBase URL: https://api.mangarockhd.com/query/web401"
+  description: "MangaRock API documentation\nBase URL: https://api.mangarockhd.com/query/web401\n\nAll OIDs are formated `mrs-<type>-<number>`"
   version: "1.0.0"
   title: "MangaRock API"
 host: "cors-anywhere.herokuapp.com"
@@ -62,7 +62,41 @@ paths:
               data:
                 type: "array"
                 items:
-                  $ref: "#/definitions/serie"
+                  type: "object"
+                  properties:
+                    oid:
+                      type: "string"
+                    name:
+                      type: "string"
+                    genres:
+                      type: "array"
+                      items:
+                        type: "string"
+                    rank:
+                      type: "integer"
+                    updated_chapter:
+                      type: "integer"
+                    new_chapters:
+                      type: "array"
+                      items:
+                        type: "object"
+                        properties:
+                          oid:
+                            type: "string"
+                          name:
+                            type: "string"
+                          updatedAt:
+                            type: "string"
+                            format: "date-time"
+                    completed:
+                      type: "boolean"
+                      default: false
+                    thumbnail:
+                      type: "string"
+                      description: "PNG or JPEG"
+                    updated_at:
+                      type: "string"
+                      format: "date-time"
   /mrs_home_hot_updates:
     $ref: "#/paths/~1mrs_home_latest"
   /mrs_latest:
@@ -84,7 +118,8 @@ paths:
             genres:
               type: "object"
               additionalProperties:
-                type: "string"
+                type: "integer"
+                default: 0
             order:
               type: "string"
               default: "rank"
@@ -115,14 +150,7 @@ paths:
         200:
           description: ""
           schema:
-            type: "object"
-            properties:
-              code:
-                $ref: "#/definitions/return-code"
-              data:
-                type: "array"
-                items:
-                  $ref: "#/definitions/serie-oid"
+            $ref: "#/definitions/list"
   /license:
     post:
       tags:
@@ -138,25 +166,74 @@ paths:
     post:
       tags:
       - "search"
-      summary: "TODO"
+      summary: "search while typing"
       description: ""
+      consumes:
+      - "text/plain"
+      parameters:
+      - in: "body"
+        name: "query"
+        required: true
+        schema:
+          type: "string"
+          example: "one"
       responses:
         200:
           description: ""
+          schema:
+            type: "object"
+            properties:
+              code:
+                $ref: "#/definitions/return-code"
+              data:
+                type: "object"
+                properties:
+                  author:
+                    type: "array"
+                    items:
+                      type: "string"
+                  character:
+                    type: "array"
+                    items:
+                      type: "string"
+                  serie:
+                    type: "array"
+                    items:
+                      type: "string"
   /mrs_search:
     post:
       tags:
       - "search"
-      summary: "TODO"
+      summary: "full search"
       description: ""
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          type: "object"
+          properties:
+            keywords:
+              type: "string"
+            type:
+              type: "string"
+              enum:
+              - "series"
+              - "author"
+              - "character"
+          example:
+            keywords: "one"
+            type: "series"
       responses:
         200:
           description: ""
+          schema:
+            $ref: "#/definitions/list"
   /manga_detail:
     post:
       tags:
       - "info"
-      summary: "TODO"
+      summary: "query info on one or more manga"
       description: ""
       parameters:
       - in: "body"
@@ -169,7 +246,7 @@ paths:
             oids:
               type: "object"
               properties:
-                mrs-serie-100159890:
+                additionalProperties:
                   type: "integer"
                   default: 0
             sections:
@@ -197,6 +274,178 @@ paths:
       responses:
         200:
           description: ""
+          schema:
+            type: "object"
+            properties:
+              code:
+                $ref: "#/definitions/return-code"
+              data:
+                type: "object"
+                properties:
+                  additionalProperties:
+                    type: "object"
+                    properties:
+                      feature_collections:
+                        type: "object"
+                        properties:
+                          collections:
+                            type: "array"
+                            items:
+                              type: "string"
+                      artworks:
+                        type: "object"
+                        properties:
+                          artworks:
+                            type: "array"
+                            items:
+                              type: "string"
+                      author:
+                        type: "object"
+                        properties:
+                          authors:
+                            type: "array"
+                            items:
+                              type: "object"
+                              properties:
+                                oid:
+                                  type: "string"
+                                role:
+                                  type: "string"
+                      default:
+                        type: "object"
+                        properties:
+                          oid:
+                            type: "string"
+                          mid:
+                            type: "integer"
+                          msid:
+                            type: "integer"
+                          last_updated:
+                            type: "integer"
+                      social_stats:
+                        type: "object"
+                        properties:
+                          rank:
+                            type: "integer"
+                          read:
+                            type: "integer"
+                      basic_info:
+                        type: "object"
+                        properties:
+                          name:
+                            type: "string"
+                          thumbnail:
+                            type: "string"
+                          thumbnail_extra:
+                            type: "object"
+                            properties:
+                              generated:
+                                type: "boolean"
+                              averageColor:
+                                type: "string"
+                              textBackgroundColor:
+                                type: "string"
+                              textColor:
+                                type: "string"
+                          cover:
+                            type: "string"
+                          cover_extra:
+                              type: "object"
+                              properties:
+                                generated:
+                                  type: "boolean"
+                                averageColor:
+                                  type: "string"
+                                textBackgroundColor:
+                                  type: "string"
+                                textColor:
+                                  type: "string"
+                          alias:
+                            type: "array"
+                            items:
+                              type: "string"
+                          rank:
+                            type: "integer"
+                          removed:
+                            type: "boolean"
+                          author:
+                            type: "string"
+                          completed:
+                            type: "boolean"
+                          direction:
+                            type: "integer"
+                          categories:
+                            type: "array"
+                            items:
+                              type: "integer"
+                          total_chapters:
+                            type: "integer"
+                          description:
+                            type: "string"
+                          release_frequency:
+                            type: "object"
+                            properties:
+                              type:
+                                type: "string"
+                              unit:
+                                type: "string"
+                              amount:
+                                type: "integer"
+                          mrs_series:
+                            type: "string"
+                      summary:
+                        type: "object"
+                        properties:
+                          plot_points:
+                            type: "array"
+                            items:
+                              type: "string"
+                          key_genres:
+                            type: "array"
+                            items:
+                              type: "string"
+                      other_fact:
+                        type: "object"
+                        properties:
+                          extra:
+                            type: "object"
+                            properties:
+                              additionalProperties:
+                                type: "string"
+                      same_author:
+                        type: "object"
+                        properties:
+                          series:
+                            type: "array"
+                            items:
+                              type: "string"
+                      chapters:
+                        type: "object"
+                        properties:
+                          chapters:
+                            type: "array"
+                            items:
+                              type: "object"
+                              properties:
+                                cid:
+                                  type: "integer"
+                                oid:
+                                  type: "integer"
+                                name:
+                                  type: "string"
+                                last_updated:
+                                  type: "integer"
+                                order:
+                                  type: "integer"
+                      sub_genres:
+                        type: "object"
+                        properties:
+                          sub_genres:
+                            type: "array"
+                            items:
+                              type: "string"
+                            
+          
   /rec_similar_series_ml:
     get:
       tags:
@@ -405,30 +654,15 @@ definitions:
   return-code:
     type: "integer"
     default: 0
-  serie-oid:
-    type: "string"
-    pattern: "mrs-serie-\\d+"
-  chapter-oid:
-    type: "string"
-    pattern: "mrs-chapter-\\d+"
-  genre-oid:
-    type: "string"
-    pattern: "mrs-genre-\\d+"
-  author-oid:
-    type: "string"
-    pattern: "mrs-author-\\d+"
-  character-oid:
-    type: "string"
-    pattern: "mrs-character-\\d+"
-  collection-oid:
-    type: "string"
-    pattern: "mrs-collection-\\d+"
-  jpeg-url:
-    type: "string"
-    pattern: "https:\\/\\/f01\\.mrcdn\\.info\\/file\\/mrportal\\/(.*)\\.jpg"
-  mri-url:
-    type: "string"
-    pattern: "https:\\/\\/f01\\.mrcdn\\.info\\/file\\/mrportal\\/(.*)\\.mri"
+  list:
+    type: "object"
+    properties:
+      code:
+        $ref: "#/definitions/return-code"
+      data:
+        type: "array"
+        items:
+          type: "string"
   section:
     type: "string"
     enum:
@@ -446,38 +680,3 @@ definitions:
     - "related_series"
     - "same_author"
     - "feature_collections"
-  serie:
-    type: "object"
-    properties:
-      oid:
-        $ref: "#/definitions/serie-oid"
-      name:
-        type: "string"
-      genres:
-        type: "array"
-        items:
-          $ref: "#/definitions/genre-oid"
-      rank:
-        type: "integer"
-      updated_chapter:
-        type: "integer"
-      new_chapters:
-        type: "array"
-        items:
-          type: "object"
-          properties:
-            oid:
-              $ref: "#/definitions/chapter-oid"
-            name:
-              type: "string"
-            updatedAt:
-              type: "string"
-              format: "date-time"
-      completed:
-        type: "boolean"
-        default: false
-      thumbnail:
-        $ref: "#/definitions/jpeg-url"
-      updated_at:
-        type: "string"
-        format: "date-time"
