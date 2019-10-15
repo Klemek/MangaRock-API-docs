@@ -6,20 +6,41 @@ info:
 host: "api.mangarockhd.com"
 basePath: "/query/web401"
 tags:
+- name: "updated"
+  description: "recently updated mangas"
 - name: "list"
+  description: "list all mangas/authors/etc."
 - name: "info"
+  description: "get info on an object"
 - name: "search"
+  description: "search for a specific object"
 - name: "read"
-  description: "Pages are in an unknown 'MRI' file format that needs decryption"
+  description: "read a chapter (Pages are in an unknown 'MRI' file format that needs decryption)"
 - name: "recommendations"
+  description: "best to read next"
 - name: "unknown"
+  description: "not self explaining queries"
 schemes:
 - "https"
 paths:
-  /mrs_latest:
+  /foryou:
     get:
       tags:
-      - "list"
+      - "unknown"
+      summary: "TODO"
+      description: ""
+      parameters:
+      - $ref: "#/definitions/msid"
+  /realtime:
+    get:
+      tags:
+      - "unknown"
+      summary: "TODO"
+      description: ""
+  /mrs_home_latest:
+    get:
+      tags:
+      - "updated"
       summary: "Latest updates"
       description: ""
       responses:
@@ -33,11 +54,17 @@ paths:
                 type: "array"
                 items:
                   $ref: "#/definitions/serie"
+  /mrs_home_hot_updates:
+    $ref: "#/paths/~1mrs_home_latest"
+    get:
+      summary: "'hot' updates"
+  /mrs_latest:
+    $ref: "#/paths/~1mrs_home_latest"
   /mrs_filter:
     post:
       tags:
       - "list"
-      summary: "All manga available on the web site"
+      summary: "All mangas available on the web site"
       description: ""
       parameters:
       - in: "body"
@@ -82,6 +109,101 @@ paths:
                 type: "array"
                 items:
                   $ref: "#/definitions/serie-oid"
+  /license:
+    post:
+      tags:
+      - "unknown"
+      summary: "TODO"
+      description: ""
+  /mrs_quick_search:
+    post:
+      tags:
+      - "search"
+      summary: "TODO"
+      description: ""
+  /mrs_search:
+    post:
+      tags:
+      - "search"
+      summary: "TODO"
+      description: ""
+  /manga_detail:
+    post:
+      tags:
+      - "info"
+      summary: "TODO"
+      description: ""
+  /rec_similar_series_ml:
+    get:
+      tags:
+      - "recommendation"
+      summary: "TODO"
+      description: ""
+  /rec_because_you_read_ml:
+    $ref: "#/paths/~1rec_similar_series_ml"
+  /rec_recommendation_ml:
+    $ref: "#/paths/~1rec_similar_series_ml"
+  /rec_btrn:
+    post:
+      tags:
+      - "recommendation"
+      summary: "TODO (best to read next)"
+      description: ""
+  /pagesv2:
+    get:
+      tags:
+      - "read"
+      summary: "TODO"
+      description: ""
+  /mrs_all_character:
+    post:
+      tags:
+      - "list"
+      summary: "TODO"
+      description: ""
+  /character:
+    post:
+      tags:
+      - "info"
+      summary: "TODO"
+      description: ""
+  /mrs_serie_related_character:
+    post:
+      tags:
+      - "info"
+      summary: "TODO"
+      description: ""
+  /mrs_all_author:
+    post:
+      tags:
+      - "list"
+      summary: "TODO"
+      description: ""
+  /author:
+    post:
+      tags:
+      - "info"
+      summary: "TODO"
+      description: ""
+  /genre:
+    post:
+      tags:
+      - "info"
+      summary: "TODO"
+      description: ""
+  /mrs_serie_related_author:
+    post:
+      tags:
+      - "info"
+      summary: "TODO"
+      description: ""
+  /collection:
+    post:
+      tags:
+      - "info"
+      summary: "TODO"
+      description: ""
+
 definitions:
   return-code:
     type: "integer"
@@ -110,6 +232,14 @@ definitions:
   mri-url:
     type: "string"
     pattern: "https:\/\/f01\.mrcdn\.info\/file\/mrportal\/(.*)\.mri"
+  msid:
+    in: "msid"
+    name: "msid"
+    description: ""
+    required: true
+    schema:
+      type: "integer"
+      default: 71
   serie:
     type: "object"
     properties:
