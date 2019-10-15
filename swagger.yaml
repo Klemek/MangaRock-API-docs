@@ -83,36 +83,39 @@ paths:
               data:
                 type: "array"
                 items:
-                  type: "string"
-                  default: "mrs-serie-<int>"
+                  type: "mrs-serie-<int>"
 definitions:
   serie:
     type: "object"
     properties:
       oid:
-        type: "string"
-        default: "mrs-serie-<int>"
+        type: "mrs-serie-<int>"
       name:
         type: "string"
-      genrese:
+      genres:
         type: "array"
         items:
-          type: "string"
-          default: "mrs-genre-<int>"
-        rank:
-          type: "integer"
-        updated_chapter:
-          type: "integer"
-        new_chapters:
-          type: "array"
-          items:
-            type: "object"
-            properties:
-              oid:
-                type: "string"
-                default: "mrs-chapter-<int>"
-              name:
-                type: "string"
-              updatedAt:
-                type: "string"
-                format: "date-time"
+          type: "mrs-genre-<int>"
+      rank:
+        type: "integer"
+      updated_chapter:
+        type: "integer"
+      new_chapters:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            oid:
+              type: "mrs-chapter-<int>"
+            name:
+              type: "string"
+            updatedAt:
+              type: "string"
+              format: "date-time"
+      completed:
+        type: "boolean"
+      thumbnail:
+        type: "jpeg url"
+      updated_at:
+        type: "string"
+        format: "date-time"
