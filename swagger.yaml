@@ -88,28 +88,28 @@ definitions:
     default: 0
   serie-oid:
     type: "string"
-    default: "mrs-serie-<int>"
+    pattern: "mrs-serie-(\d+)"
   chapter-oid:
     type: "string"
-    default: "mrs-chapter-<int>"
+    pattern: "mrs-chapter-(\d+)"
   genre-oid:
     type: "string"
-    default: "mrs-genre-<int>"
+    pattern: "mrs-genre-(\d+)"
   author-oid:
     type: "string"
-    default: "mrs-author-<int>"
+    pattern: "mrs-author-(\d+)"
   character-oid:
     type: "string"
-    default: "mrs-character-<int>"
+    pattern: "mrs-character-(\d+)"
   collection-oid:
     type: "string"
-    default: "mrs-collection-<int>"
+    pattern: "mrs-collection-(\d+)"
   jpeg-url:
     type: "string"
-    default: "https://f01.mrcdn.info/file/mrportal/<>.jpg"
+    pattern: "https:\/\/f01\.mrcdn\.info\/file\/mrportal\/(.*)\.jpg"
   mri-url:
     type: "string"
-    default: "https://f01.mrcdn.info/file/mrportal/<>.mri"
+    pattern: "https:\/\/f01\.mrcdn\.info\/file\/mrportal\/(.*)\.mri"
   serie:
     type: "object"
     properties:
