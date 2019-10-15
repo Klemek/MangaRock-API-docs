@@ -1,10 +1,10 @@
 swagger: "2.0"
 info:
-  description: "MangaRock API documentation"
+  description: "MangaRock API documentation\nBase URL: https://api.mangarockhd.com/query/web401"
   version: "1.0.0"
   title: "MangaRock API"
-host: "api.mangarockhd.com"
-basePath: "/query/web401"
+host: "cors-anywhere.herokuapp.com"
+basePath: "/https://api.mangarockhd.com/query/web401"
 tags:
 - name: "updated"
   description: "recently updated mangas"
@@ -16,7 +16,7 @@ tags:
   description: "search for a specific object"
 - name: "read"
   description: "read a chapter (Pages are in an unknown 'MRI' file format that needs decryption)"
-- name: "recommendations"
+- name: "recommendation"
   description: "best to read next"
 - name: "unknown"
   description: "not self explaining queries"
@@ -30,13 +30,21 @@ paths:
       summary: "TODO"
       description: ""
       parameters:
-      - $ref: "#/definitions/msid"
+      - $ref: "#/parameters/msid"
+      responses:
+        200:
+          description: ""
   /realtime:
     get:
       tags:
       - "unknown"
       summary: "TODO"
       description: ""
+      parameters:
+      - $ref: "#/parameters/msid"
+      responses:
+        200:
+          description: ""
   /mrs_home_latest:
     get:
       tags:
@@ -45,6 +53,7 @@ paths:
       description: ""
       responses:
         200:
+          description: ""
           schema:
             type: "object"
             properties:
@@ -56,8 +65,6 @@ paths:
                   $ref: "#/definitions/serie"
   /mrs_home_hot_updates:
     $ref: "#/paths/~1mrs_home_latest"
-    get:
-      summary: "'hot' updates"
   /mrs_latest:
     $ref: "#/paths/~1mrs_home_latest"
   /mrs_filter:
@@ -100,6 +107,7 @@ paths:
               - "ongoing"
       responses:
         200:
+          description: ""
           schema:
             type: "object"
             properties:
@@ -115,131 +123,305 @@ paths:
       - "unknown"
       summary: "TODO"
       description: ""
+      parameters:
+      - $ref: "#/parameters/msid"
+      responses:
+        200:
+          description: ""
   /mrs_quick_search:
     post:
       tags:
       - "search"
       summary: "TODO"
       description: ""
+      responses:
+        200:
+          description: ""
   /mrs_search:
     post:
       tags:
       - "search"
       summary: "TODO"
       description: ""
+      responses:
+        200:
+          description: ""
   /manga_detail:
     post:
       tags:
       - "info"
       summary: "TODO"
       description: ""
+      parameters:
+      - in: "body"
+        name: "body"
+        description: ""
+        required: true
+        schema:
+          type: "object"
+          properties:
+            oids:
+              type: "object"
+              properties:
+                mrs-serie-100159890:
+                  type: "integer"
+                  default: 0
+            sections:
+              type: "array"
+              items:
+                $ref: "#/definitions/section"
+      responses:
+        200:
+          description: ""
   /rec_similar_series_ml:
     get:
       tags:
       - "recommendation"
       summary: "TODO"
       description: ""
+      parameters:
+      - $ref: "#/parameters/msid"
+      - $ref: "#/parameters/serie-oid"
+      responses:
+        200:
+          description: ""
   /rec_because_you_read_ml:
     $ref: "#/paths/~1rec_similar_series_ml"
   /rec_recommendation_ml:
-    $ref: "#/paths/~1rec_similar_series_ml"
+    get:
+      tags:
+      - "recommendation"
+      summary: "TODO"
+      description: ""
+      parameters:
+      - $ref: "#/parameters/msid"
+      responses:
+        200:
+          description: ""
   /rec_btrn:
     post:
       tags:
       - "recommendation"
       summary: "TODO (best to read next)"
       description: ""
+      parameters:
+      - $ref: "#/parameters/msid"
+      - $ref: "#/parameters/serie-oid"
+      responses:
+        200:
+          description: ""
   /pagesv2:
     get:
       tags:
       - "read"
       summary: "TODO"
       description: ""
+      parameters:
+      - $ref: "#/parameters/chapter-oid"
+      responses:
+        200:
+          description: ""
   /mrs_all_character:
     post:
       tags:
       - "list"
       summary: "TODO"
       description: ""
+      parameters:
+      - $ref: "#/parameters/name"
+      responses:
+        200:
+          description: ""
   /character:
-    post:
+    get:
       tags:
       - "info"
       summary: "TODO"
       description: ""
+      parameters:
+      - $ref: "#/parameters/character-oid"
+      responses:
+        200:
+          description: ""
   /mrs_serie_related_character:
     post:
       tags:
       - "info"
       summary: "TODO"
       description: ""
+      parameters:
+      - $ref: "#/parameters/character-oid"
+      responses:
+        200:
+          description: ""
   /mrs_all_author:
     post:
       tags:
       - "list"
       summary: "TODO"
       description: ""
+      parameters:
+      - $ref: "#/parameters/name"
+      responses:
+        200:
+          description: ""
   /author:
     post:
       tags:
       - "info"
       summary: "TODO"
       description: ""
+      parameters:
+      - $ref: "#/parameters/author-oid"
+      responses:
+        200:
+          description: ""
   /genre:
     post:
       tags:
       - "info"
       summary: "TODO"
       description: ""
+      parameters:
+      - $ref: "#/parameters/genre-oid"
+      responses:
+        200:
+          description: ""
   /mrs_serie_related_author:
     post:
       tags:
       - "info"
       summary: "TODO"
       description: ""
+      parameters:
+      - $ref: "#/parameters/author-oid"
+      responses:
+        200:
+          description: ""
   /collection:
     post:
       tags:
       - "info"
       summary: "TODO"
       description: ""
-
+      parameters:
+      - $ref: "#/parameters/collection-oid"
+      responses:
+        200:
+          description: ""
+parameters:
+  msid:
+    in: "query"
+    name: "msid"
+    description: ""
+    required: true
+    type: "integer"
+    default: 71
+  serie-oid:
+    in: "query"
+    name: "oid"
+    description: ""
+    required: true
+    type: "string"
+    pattern: "mrs-serie-\\d+"
+    default: "mrs-serie-100159890"
+  chapter-oid:
+    in: "query"
+    name: "oid"
+    description: ""
+    required: true
+    type: "string"
+    pattern: "mrs-chapter-\\d+"
+    default: "mrs-chapter-200179435"
+  genre-oid:
+    in: "query"
+    name: "oid"
+    description: ""
+    required: true
+    type: "string"
+    pattern: "mrs-genre-\\d+"
+    default: "mrs-genre-304068"
+  character-oid:
+    in: "query"
+    name: "oid"
+    description: ""
+    required: true
+    type: "string"
+    pattern: "mrs-character-\\d+"
+    default: "mrs-character-304068"
+  collection-oid:
+    in: "query"
+    name: "oid"
+    description: ""
+    required: true
+    type: "string"
+    pattern: "mrs-collection-\\d+"
+    default: "mrs-collection-100384825"
+  author-oid:
+    in: "query"
+    name: "oid"
+    description: ""
+    required: true
+    type: "string"
+    pattern: "mrs-author-\\d+"
+    default: "mrs-author-100171605"
+  name:
+    in: "body"
+    name: "body"
+    description: "restrict list"
+    required: true
+    schema:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+          pattern: "[A-Z]?"
+          default: ""
 definitions:
   return-code:
     type: "integer"
     default: 0
   serie-oid:
     type: "string"
-    pattern: "mrs-serie-(\d+)"
+    pattern: "mrs-serie-\\d+"
   chapter-oid:
     type: "string"
-    pattern: "mrs-chapter-(\d+)"
+    pattern: "mrs-chapter-\\d+"
   genre-oid:
     type: "string"
-    pattern: "mrs-genre-(\d+)"
+    pattern: "mrs-genre-\\d+"
   author-oid:
     type: "string"
-    pattern: "mrs-author-(\d+)"
+    pattern: "mrs-author-\\d+"
   character-oid:
     type: "string"
-    pattern: "mrs-character-(\d+)"
+    pattern: "mrs-character-\\d+"
   collection-oid:
     type: "string"
-    pattern: "mrs-collection-(\d+)"
+    pattern: "mrs-collection-\\d+"
   jpeg-url:
     type: "string"
-    pattern: "https:\/\/f01\.mrcdn\.info\/file\/mrportal\/(.*)\.jpg"
+    pattern: "https:\\/\\/f01\\.mrcdn\\.info\\/file\\/mrportal\\/(.*)\\.jpg"
   mri-url:
     type: "string"
-    pattern: "https:\/\/f01\.mrcdn\.info\/file\/mrportal\/(.*)\.mri"
-  msid:
-    in: "msid"
-    name: "msid"
-    description: ""
-    required: true
-    schema:
-      type: "integer"
-      default: 71
+    pattern: "https:\\/\\/f01\\.mrcdn\\.info\\/file\\/mrportal\\/(.*)\\.mri"
+  section:
+    type: "string"
+    enum:
+    - "basic_info"
+    - "summary"
+    - "artworks"
+    - "sub_genres"
+    - "social_stats"
+    - "author"
+    - "character"
+    - "publisher"
+    - "scanlator"
+    - "other_fact"
+    - "chapters"
+    - "related_series"
+    - "same_author"
+    - "feature_collections"
   serie:
     type: "object"
     properties:
