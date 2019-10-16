@@ -27,24 +27,150 @@ paths:
     get:
       tags:
       - "unknown"
-      summary: "TODO"
+      summary: "Home page sections and their content"
       description: ""
       parameters:
       - $ref: "#/parameters/msid"
       responses:
         200:
           description: ""
+          schema:
+            type: "object"
+            properties:
+              code:
+                $ref: "#/definitions/return-code"
+              data:
+                type: "object"
+                properties:
+                  tracking_id:
+                    type: "string"
+                  sections:
+                    type: "array"
+                    items:
+                      type: "object"
+                      properties:
+                        sectionId:
+                          type: "string"
+                        title:
+                          type: "object"
+                          properties:
+                            additionalProperty:
+                              type: "string"
+                        subtitle:
+                          type: "object"
+                          properties:
+                            additionalProperty:
+                              type: "string"
+                        type:
+                          type: "string"
+                        items:
+                          type: "object"
+                          properties:
+                            component:
+                              type: "string"
+                            preview_json_url:
+                              type: "string"
+                            data:
+                              type: "array"
+                              items:
+                                type: "object"
+                                properties:
+                                  oid:
+                                    type: "string"
+                                  title:
+                                    type: "object"
+                                    properties:
+                                      additionalProperty:
+                                        type: "string"
+                                  subtitle:
+                                    type: "object"
+                                    properties:
+                                      additionalProperty:
+                                        type: "string"
+                                  banner_url:
+                                    type: "string"
+                                  detail_json_url:
+                                    type: "string"
+                                  cta:
+                                    type: "object"
+                                    properties:
+                                      additionalProperty:
+                                        type: "string"
+                                  items:
+                                    type: "array"
+                                    items:
+                                      type: "string"
+                                  oids:
+                                    type: "array"
+                                    items:
+                                      type: "string"
+            example:
+              code: 0
+              data:
+                tracking_id: "mra-foryou-13615"
+                sections:
+                - sectionId: "mra-section-13478"
+                  title:
+                    en: "Reading Lists "
+                  subtitle:
+                    en: "Updated Daily "
+                  type: "custom"
+                  items:
+                    component: "StoryBasedItem"
+                    preview_json_url: "https://mangarock.com/query/web401/foryou_section_preview?oid=mra-section-13478&country=United+States&ts=1567765515&raw=1"
+                    data:
+                    - oid: "mrs-collection-200040295"
+                      title:
+                        en: "The Charm of Being with an Older Girl!"
+                      subtitle:
+                        en: "It's a commonly accepted… each other's company. "
+                      banner_url: ""
+                      detail_json_url: "https://mangarock.com/query/web401/legacy_collection?oid=mrs-collection-200040295&country=United+States&ts=1567765515"
+                      cta:
+                        en: "View now"
+                      items:
+                      - "631756"
+                      oids:
+                      - "mrs-serie-100367146"
   /realtime:
     get:
       tags:
       - "unknown"
-      summary: "TODO"
+      summary: "Some liste of manga"
       description: ""
       parameters:
       - $ref: "#/parameters/msid"
       responses:
         200:
           description: ""
+          schema:
+            type: "object"
+            properties:
+              code:
+                $ref: "#/definitions/return-code"
+              data:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    mid:
+                      type: "integer"
+                    name:
+                      type: "string"
+                    author:
+                      type: "string"
+                    rank:
+                      type: "integer"
+                    oid:
+                      type: "string"
+            example:
+              code: 0
+              data:
+              - mid: 686075
+                name: "Metropolitan System"
+                author: "Tu Jun"
+                rank: 2
+                oid: "mrs-serie-200015767"
   /mrs_home_latest:
     get:
       tags:
@@ -97,6 +223,22 @@ paths:
                     updated_at:
                       type: "string"
                       format: "date-time"
+            example:
+              code: 0
+              data:
+              - oid: "mrs-serie-200082321"
+                name: "The Strongest War God"
+                genres:
+                - "mrs-genre-304068"
+                rank: 254
+                updated_chapters: 1
+                new_chapters:
+                - oid: "mrs-chapter-200182953"
+                  name: "Chapter 80"
+                  updatedAt: "2019-10-16T07:12:36Z"
+                completed: false
+                thumbnail: "https://f01.mrcdn.info/file/mrportal/j/7/7/0/K3.kBUIfi9.png"
+                updated_at: "2019-10-16T07:12:36Z"
   /mrs_home_hot_updates:
     $ref: "#/paths/~1mrs_home_latest"
   /mrs_latest:
@@ -155,13 +297,27 @@ paths:
     post:
       tags:
       - "unknown"
-      summary: "TODO"
+      summary: "some list of mid"
       description: ""
       parameters:
       - $ref: "#/parameters/msid"
       responses:
         200:
           description: ""
+          schema:
+            type: "object"
+            properties:
+              code:
+                $ref: "#/definitions/return-code"
+              data:
+                type: "array"
+                items:
+                  type: "integer"
+            example:
+              code: 0
+              data:
+              - 546948
+              - 563963
   /mrs_quick_search:
     post:
       tags:
@@ -200,6 +356,15 @@ paths:
                     type: "array"
                     items:
                       type: "string"
+            example:
+              code: 0
+              data:
+                author:
+                - "mrs-author-304768"
+                character:
+                - "mrs-character-342082"
+                series:
+                - "mrs-serie-221621"
   /mrs_search:
     post:
       tags:
@@ -444,8 +609,79 @@ paths:
                             type: "array"
                             items:
                               type: "string"
-                            
-          
+            example:
+              code: 0
+              data:
+                mrs-serie-100159890:
+                  social_stats:
+                    rank: 2
+                    read: 49390069
+                  artworks:
+                    artworks:
+                    - https://f01.mrcdn.info/file/mrportal/j/1/7/8/Qy.4aoOdLRb.jpg
+                  sub_genres:
+                    sub_genres:
+                    - mrs-genre-304068
+                  author:
+                    authors:
+                    - oid: mrs-author-100171605
+                      role: art
+                  feature_collections:
+                    collections:
+                    - mrs-collection-100384825
+                  chapters:
+                    chapters:
+                    - cid: 27667050
+                      oid: mrs-chapter-100171588
+                      name: 'Chapter 1: Refinement Technique (1)'
+                      last_updated: 1517204304
+                      order: 0
+                  other_fact:
+                    extra: {}
+                  default:
+                    oid: mrs-serie-100159890
+                    mid: 596702
+                    msid: 71
+                    last_updated: 1571179977
+                  same_author:
+                    series:
+                    - mrs-serie-100242638
+                  summary:
+                    plot_points:
+                    - After losing the Luo Family's secret heirloom, Luo Zheng has become a mere
+                      slave of his own clan
+                    key_genres:
+                    - mrs-genre-304089
+                  basic_info:
+                    name: Apotheosis
+                    thumbnail: https://f01.mrcdn.info/file/mrportal/j/6/m/e/K3.fAiKDFIT.png
+                    thumbnail_extra:
+                      generated: false
+                      averageColor: "#BC9592"
+                      textBackgroundColor: "#DFBBB9"
+                      textColor: "#000000"
+                    cover: https://f01.mrcdn.info/file/mrportal/i/c/e/6/vh.fAfo2i1n.jpg
+                    alias:
+                    - 百炼成神
+                    cover_extra:
+                      generated: false
+                      averageColor: "#C3AAB2"
+                      textBackgroundColor: "#D9BFC7"
+                      textColor: "#000000"
+                    rank: 2
+                    removed: false
+                    author: Ranzai Studio
+                    completed: false
+                    direction: 0
+                    categories:
+                    - 1
+                    total_chapters: 358
+                    description: "Apotheosis - elevation to the status of a god."
+                    release_frequency:
+                      type: auto
+                      unit: day
+                      amount: 1
+                    mrs_series: 
   /rec_similar_series_ml:
     get:
       tags:
@@ -458,6 +694,13 @@ paths:
       responses:
         200:
           description: ""
+          schema:
+            type: "object"
+            properties:
+              code:
+                $ref: "#/definitions/return-code"
+              data:
+                type: "object"
   /rec_because_you_read_ml:
     $ref: "#/paths/~1rec_similar_series_ml"
   /rec_recommendation_ml:
@@ -471,6 +714,13 @@ paths:
       responses:
         200:
           description: ""
+          schema:
+            type: "object"
+            properties:
+              code:
+                $ref: "#/definitions/return-code"
+              data:
+                type: "object"
   /rec_btrn:
     post:
       tags:
@@ -483,6 +733,13 @@ paths:
       responses:
         200:
           description: ""
+          schema:
+            type: "object"
+            properties:
+              code:
+                $ref: "#/definitions/return-code"
+              data:
+                type: "object"
   /pagesv2:
     get:
       tags:
@@ -494,6 +751,13 @@ paths:
       responses:
         200:
           description: ""
+          schema:
+            type: "object"
+            properties:
+              code:
+                $ref: "#/definitions/return-code"
+              data:
+                type: "object"
   /mrs_all_character:
     post:
       tags:
@@ -505,6 +769,13 @@ paths:
       responses:
         200:
           description: ""
+          schema:
+            type: "object"
+            properties:
+              code:
+                $ref: "#/definitions/return-code"
+              data:
+                type: "object"
   /character:
     get:
       tags:
@@ -516,6 +787,13 @@ paths:
       responses:
         200:
           description: ""
+          schema:
+            type: "object"
+            properties:
+              code:
+                $ref: "#/definitions/return-code"
+              data:
+                type: "object"
   /mrs_serie_related_character:
     post:
       tags:
@@ -527,6 +805,13 @@ paths:
       responses:
         200:
           description: ""
+          schema:
+            type: "object"
+            properties:
+              code:
+                $ref: "#/definitions/return-code"
+              data:
+                type: "object"
   /mrs_all_author:
     post:
       tags:
@@ -538,6 +823,13 @@ paths:
       responses:
         200:
           description: ""
+          schema:
+            type: "object"
+            properties:
+              code:
+                $ref: "#/definitions/return-code"
+              data:
+                type: "object"
   /author:
     post:
       tags:
@@ -549,6 +841,13 @@ paths:
       responses:
         200:
           description: ""
+          schema:
+            type: "object"
+            properties:
+              code:
+                $ref: "#/definitions/return-code"
+              data:
+                type: "object"
   /genre:
     post:
       tags:
@@ -560,6 +859,13 @@ paths:
       responses:
         200:
           description: ""
+          schema:
+            type: "object"
+            properties:
+              code:
+                $ref: "#/definitions/return-code"
+              data:
+                type: "object"
   /mrs_serie_related_author:
     post:
       tags:
@@ -571,6 +877,13 @@ paths:
       responses:
         200:
           description: ""
+          schema:
+            type: "object"
+            properties:
+              code:
+                $ref: "#/definitions/return-code"
+              data:
+                type: "object"
   /collection:
     post:
       tags:
@@ -582,6 +895,13 @@ paths:
       responses:
         200:
           description: ""
+          schema:
+            type: "object"
+            properties:
+              code:
+                $ref: "#/definitions/return-code"
+              data:
+                type: "object"
 parameters:
   msid:
     in: "query"
@@ -663,6 +983,10 @@ definitions:
         type: "array"
         items:
           type: "string"
+    example:
+      code: 0
+      data:
+      - "mrs-serie-200082321"
   section:
     type: "string"
     enum:
