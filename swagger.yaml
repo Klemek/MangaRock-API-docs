@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  description: "MangaRock API documentation\nBase URL: https://api.mangarockhd.com/query/web401\n\nAll OIDs are formated `mrs-<type>-<number>`"
+  description: "MangaRock API documentation\nBase URL: https://api.mangarockhd.com/query/web401\n\nAll OIDs are formated `mrs-<type>-<number>`\n\nSee also [how to decode MRI images](https://github.com/poketo/manga-rock-image-decoder)"
   version: "0.0.1"
   title: "MangaRock API"
 host: "cors-anywhere.herokuapp.com"
