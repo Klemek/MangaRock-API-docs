@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
   description: "MangaRock API documentation\nBase URL: https://api.mangarockhd.com/query/web401\n\nAll OIDs are formated `mrs-<type>-<number>`"
-  version: "1.0.0"
+  version: "0.0.1"
   title: "MangaRock API"
 host: "cors-anywhere.herokuapp.com"
 basePath: "/https://api.mangarockhd.com/query/web401"
@@ -53,14 +53,12 @@ paths:
                           type: "string"
                         title:
                           type: "object"
-                          properties:
-                            additionalProperty:
-                              type: "string"
+                          additionalProperties:
+                            type: "string"
                         subtitle:
                           type: "object"
-                          properties:
-                            additionalProperty:
-                              type: "string"
+                          additionalProperties:
+                            type: "string"
                         type:
                           type: "string"
                         items:
@@ -79,23 +77,20 @@ paths:
                                     type: "string"
                                   title:
                                     type: "object"
-                                    properties:
-                                      additionalProperty:
-                                        type: "string"
+                                    additionalProperties:
+                                      type: "string"
                                   subtitle:
                                     type: "object"
-                                    properties:
-                                      additionalProperty:
-                                        type: "string"
+                                    additionalProperties:
+                                      type: "string"
                                   banner_url:
                                     type: "string"
                                   detail_json_url:
                                     type: "string"
                                   cta:
                                     type: "object"
-                                    properties:
-                                      additionalProperty:
-                                        type: "string"
+                                    additionalProperties:
+                                      type: "string"
                                   items:
                                     type: "array"
                                     items:
@@ -1052,6 +1047,78 @@ paths:
                 item_type: "serie"
                 json_file: "https://mangarock.com/query/android401/legacy_collection?oid=mrs-collection-100384825&country=Definitive"
                 updated_at: "2019-02-27T08:12:37Z"
+  /../../meta:
+    post:
+      tags:
+      - "info"
+      summary: "quick info about objects"
+      description: ""
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          type: "array"
+          items:
+            type: "string"
+          example:
+          - "mrs-serie-100159890"
+          - "mrs-chapter-200179435"
+          - "mrs-genre-304068"
+          - "mrs-character-100438749"
+          - "mrs-collection-100384825"
+          - "mrs-author-100171605"
+      responses:
+        200:
+          description: ""
+          schema:
+            type: "object"
+            properties:
+              code:
+                $ref: "#/definitions/return-code"
+              data:
+                type: "object"
+                additionalProperties:
+                  type: "object"
+                  properties:
+                    oid:
+                      type: "string"
+                    name:
+                      type: "string"
+                  additionalProperties: true
+            example:
+              code: 0
+              data:
+                mrs-serie-100159890:
+                  author_ids:
+                  - "mrs-author-100171605"
+                  completed: false
+                  name: "Apotheosis"
+                  oid: "mrs-serie-100159890"
+                  thumbnail: "https://f01.mrcdn.info/file/mrportal/j/6/m/e/K3.fAiKDFIT.png"
+                  total_chapters: 358
+                mrs-chapter-200179435:
+                  name: "Vol.TBD Chapter 178: Even if You Reach Out Your Hand"
+                  oid: "mrs-chapter-200179435"
+                  series_oid: "mrs-serie-132938"
+                  total_pages: 19
+                mrs-genre-304068:
+                  name: "Action"
+                  oid: "mrs-genre-304068"
+                mrs-character-100438749:
+                  name: "Adachi"
+                  oid: "mrs-character-100438749"
+                  thumbnail: "https://f01.mrcdn.info/file/mrportal/j/3/c/0/k.1WkePPc9.png"
+                mrs-collection-100384825:
+                  banner: "https://f01.mrcdn.info/file/mrportal/i/c/o/8/dB.6pKTAFcz.jpg"
+                  items:
+                  - "mrs-serie-22205"
+                  name: "Best Martial Art Of January"
+                  oid: "mrs-collection-100384825"
+                mrs-author-100171605:
+                  name: "Ranzai Studio"
+                  oid: "mrs-author-100171605"
+                  thumbnail: "https://f01.mrcdn.info/file/mrportal/i/c/3/k/nA.2wJJaecA.png"
 parameters:
   msid:
     in: "query"
@@ -1156,9 +1223,8 @@ definitions:
           type: "string"
       extras:
         type: "object"
-        properties:
-          additionalProperty:
-            type: "string"
+        additionalProperties:
+          type: "string"
   section:
     type: "string"
     enum:
