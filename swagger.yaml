@@ -618,51 +618,50 @@ paths:
                     read: 49390069
                   artworks:
                     artworks:
-                    - https://f01.mrcdn.info/file/mrportal/j/1/7/8/Qy.4aoOdLRb.jpg
+                    - "https://f01.mrcdn.info/file/mrportal/j/1/7/8/Qy.4aoOdLRb.jpg"
                   sub_genres:
                     sub_genres:
-                    - mrs-genre-304068
+                    - "mrs-genre-304068"
                   author:
                     authors:
-                    - oid: mrs-author-100171605
-                      role: art
+                    - oid: "mrs-author-100171605"
+                      role: "art"
                   feature_collections:
                     collections:
-                    - mrs-collection-100384825
+                    - "mrs-collection-100384825"
                   chapters:
                     chapters:
                     - cid: 27667050
-                      oid: mrs-chapter-100171588
-                      name: 'Chapter 1: Refinement Technique (1)'
+                      oid: "mrs-chapter-100171588"
+                      name: "Chapter 1: Refinement Technique (1)"
                       last_updated: 1517204304
                       order: 0
                   other_fact:
                     extra: {}
                   default:
-                    oid: mrs-serie-100159890
+                    oid: "mrs-serie-100159890"
                     mid: 596702
                     msid: 71
                     last_updated: 1571179977
                   same_author:
                     series:
-                    - mrs-serie-100242638
+                    - "mrs-serie-100242638"
                   summary:
                     plot_points:
-                    - After losing the Luo Family's secret heirloom, Luo Zheng has become a mere
-                      slave of his own clan
+                    - "After losing the Luo Family's secret heirloom, Luo Zheng has become a mere slave of his own clan"
                     key_genres:
-                    - mrs-genre-304089
+                    - "mrs-genre-304089"
                   basic_info:
-                    name: Apotheosis
-                    thumbnail: https://f01.mrcdn.info/file/mrportal/j/6/m/e/K3.fAiKDFIT.png
+                    name: "Apotheosis"
+                    thumbnail: "https://f01.mrcdn.info/file/mrportal/j/6/m/e/K3.fAiKDFIT.png"
                     thumbnail_extra:
                       generated: false
                       averageColor: "#BC9592"
                       textBackgroundColor: "#DFBBB9"
                       textColor: "#000000"
-                    cover: https://f01.mrcdn.info/file/mrportal/i/c/e/6/vh.fAfo2i1n.jpg
+                    cover: "https://f01.mrcdn.info/file/mrportal/i/c/e/6/vh.fAfo2i1n.jpg"
                     alias:
-                    - 百炼成神
+                    - "百炼成神"
                     cover_extra:
                       generated: false
                       averageColor: "#C3AAB2"
@@ -670,7 +669,7 @@ paths:
                       textColor: "#000000"
                     rank: 2
                     removed: false
-                    author: Ranzai Studio
+                    author: "Ranzai Studio"
                     completed: false
                     direction: 0
                     categories:
@@ -678,8 +677,8 @@ paths:
                     total_chapters: 358
                     description: "Apotheosis - elevation to the status of a god."
                     release_frequency:
-                      type: auto
-                      unit: day
+                      type: "auto"
+                      unit: "day"
                       amount: 1
                     mrs_series: 
   /rec_similar_series_ml:
@@ -719,10 +718,10 @@ paths:
             example:
               code: 0
               data:
-              - author: Shenjoy Animation
+              - author: "Shenjoy Animation"
                 mid: 603742
-                name: Holy Ancestor
-                oid: mrs-serie-100203650
+                name: "Holy Ancestor"
+                oid: "mrs-serie-100203650"
                 status: false
                 total_chapter: 191
   /rec_because_you_read_ml:
@@ -775,13 +774,13 @@ paths:
             example:
               code: 0
               data:
-              - url: https://f01.mrcdn.info/file/mrfiles/j/a/c/3/J-.lQIhAChx.mri
-              - url: https://f01.mrcdn.info/file/mrfiles/j/a/c/3/JZ.hGQqQWzD.mri
+              - url: "https://f01.mrcdn.info/file/mrfiles/j/a/c/3/J-.lQIhAChx.mri"
+              - url: "https://f01.mrcdn.info/file/mrfiles/j/a/c/3/JZ.hGQqQWzD.mri"
   /mrs_all_character:
     post:
       tags:
       - "list"
-      summary: "TODO"
+      summary: "list all characters"
       description: ""
       parameters:
       - $ref: "#/parameters/name"
@@ -794,12 +793,19 @@ paths:
               code:
                 $ref: "#/definitions/return-code"
               data:
-                type: "object"
+                type: "array"
+                items:
+                  type: "string"
+            example:
+              code: 0
+              data:
+              - "mrs-character-344901"
+              - "mrs-character-100166357"
   /character:
     get:
       tags:
       - "info"
-      summary: "TODO"
+      summary: "information on a character"
       description: ""
       parameters:
       - $ref: "#/parameters/character-oid"
@@ -812,12 +818,22 @@ paths:
               code:
                 $ref: "#/definitions/return-code"
               data:
-                type: "object"
+                $ref: "#/definitions/bio"
+            example:
+              code: 0
+              data:
+                oid: "mrs-character-344901"
+                name: "A-ya"
+                bio: "A pessimistic boy with black messy hair and red sanpaku eyes."
+                thumbnail: "https://f01.mrcdn.info/file/mrportal/h/7/m/j/l6.6JlbhgXy.png"
+                artworks:
+                - "https://f01.mrcdn.info/file/mrportal/h/5/q/2/Qc.cjYJanqV.jpg"
+                extra: {}
   /mrs_serie_related_character:
     post:
       tags:
       - "info"
-      summary: "TODO"
+      summary: "characters related to another"
       description: ""
       parameters:
       - $ref: "#/parameters/character-oid"
@@ -830,12 +846,24 @@ paths:
               code:
                 $ref: "#/definitions/return-code"
               data:
-                type: "object"
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    mid:
+                      type: "integer"
+                    oid:
+                      type: "string"
+            example:
+              code: 0
+              data:
+              - mid: 655314
+                oid: "mrs-serie-100438199"
   /mrs_all_author:
     post:
       tags:
       - "list"
-      summary: "TODO"
+      summary: "list all authors"
       description: ""
       parameters:
       - $ref: "#/parameters/name"
@@ -848,12 +876,19 @@ paths:
               code:
                 $ref: "#/definitions/return-code"
               data:
-                type: "object"
+                type: "array"
+                items:
+                  type: "string"
+            example:
+              code: 0
+              data:
+              - "mrs-author-100015717"
+              - "mrs-author-100031292"
   /author:
     post:
       tags:
       - "info"
-      summary: "TODO"
+      summary: "information on an author"
       description: ""
       parameters:
       - $ref: "#/parameters/author-oid"
@@ -866,7 +901,16 @@ paths:
               code:
                 $ref: "#/definitions/return-code"
               data:
-                type: "object"
+                $ref: "#/definitions/bio"
+            example:
+              code: 0
+              data:
+                oid: "mrs-author-100171605"
+                name: "Ranzai Studio"
+                bio: "<p>Series's copyright owner</p>"
+                thumbnail: "https://f01.mrcdn.info/file/mrportal/i/c/3/k/nA.2wJJaecA.png"
+                artworks: []
+                extra: {}
   /genre:
     post:
       tags:
@@ -960,7 +1004,7 @@ parameters:
     required: true
     type: "string"
     pattern: "mrs-character-\\d+"
-    default: "mrs-character-304068"
+    default: "mrs-character-100438749"
   collection-oid:
     in: "query"
     name: "oid"
@@ -980,7 +1024,7 @@ parameters:
   name:
     in: "body"
     name: "body"
-    description: "restrict list"
+    description: "restrict list (blank for all)"
     required: true
     schema:
       type: "object"
@@ -989,6 +1033,8 @@ parameters:
           type: "string"
           pattern: "[A-Z]?"
           default: ""
+      example:
+        name: "A"
 definitions:
   return-code:
     type: "integer"
@@ -1006,6 +1052,26 @@ definitions:
       code: 0
       data:
       - "mrs-serie-200082321"
+  bio:
+    type: "object"
+    properties:
+      oid:
+        type: "string"
+      name:
+        type: "string"
+      bio:
+        type: "string"
+      thumbnail:
+        type: "string"
+      artworks:
+        type: "array"
+        items:
+          type: "string"
+      extras:
+        type: "object"
+        properties:
+          additionalProperty:
+            type: "string"
   section:
     type: "string"
     enum:
