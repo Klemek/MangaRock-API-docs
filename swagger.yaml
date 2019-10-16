@@ -294,7 +294,7 @@ paths:
           schema:
             $ref: "#/definitions/list"
   /license:
-    post:
+    get:
       tags:
       - "unknown"
       summary: "some list of mid"
@@ -738,7 +738,7 @@ paths:
         200:
           $ref: "#/paths/~1rec_similar_series_ml/get/responses/200"
   /rec_btrn:
-    post:
+    get:
       tags:
       - "recommendation"
       summary: "list of recommended manga"
@@ -830,7 +830,7 @@ paths:
                 - "https://f01.mrcdn.info/file/mrportal/h/5/q/2/Qc.cjYJanqV.jpg"
                 extra: {}
   /mrs_serie_related_character:
-    post:
+    get:
       tags:
       - "info"
       summary: "characters related to another"
@@ -885,7 +885,7 @@ paths:
               - "mrs-author-100015717"
               - "mrs-author-100031292"
   /author:
-    post:
+    get:
       tags:
       - "info"
       summary: "information on an author"
@@ -912,10 +912,10 @@ paths:
                 artworks: []
                 extra: {}
   /genre:
-    post:
+    get:
       tags:
       - "info"
-      summary: "TODO"
+      summary: "information on a genre"
       description: ""
       parameters:
       - $ref: "#/parameters/genre-oid"
@@ -929,11 +929,33 @@ paths:
                 $ref: "#/definitions/return-code"
               data:
                 type: "object"
+                properties:
+                  oid:
+                    type: "string"
+                  name:
+                    type: "string"
+                  description:
+                    type: "string"
+                  cover:
+                    type: "string"
+                  series:
+                    type: "array"
+                    items:
+                      type: "string"
+            example:
+              code: 0
+              data:
+                oid: "mrs-genre-304068"
+                name: "Action"
+                description: "<div>The action genre in manga depicts extremely high levels of high-intensity action.</div>"
+                cover: "https://f01.mrcdn.info/file/mrportal/h/5/g/a/NH.a-CMTVdd.jpg"
+                series:
+                - "mrs-serie-132938"
   /mrs_serie_related_author:
-    post:
+    get:
       tags:
       - "info"
-      summary: "TODO"
+      summary: "mangas related to an author"
       description: ""
       parameters:
       - $ref: "#/parameters/author-oid"
@@ -946,12 +968,24 @@ paths:
               code:
                 $ref: "#/definitions/return-code"
               data:
-                type: "object"
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    mid:
+                      type: "integer"
+                    oid:
+                      type: "string"
+            example:
+              code: 0
+              data:
+              - mid: 609962
+                oid: "mrs-serie-100242638"
   /collection:
-    post:
+    get:
       tags:
       - "info"
-      summary: "TODO"
+      summary: "information on a collection"
       description: ""
       parameters:
       - $ref: "#/parameters/collection-oid"
@@ -965,6 +999,59 @@ paths:
                 $ref: "#/definitions/return-code"
               data:
                 type: "object"
+                properties:
+                  oid:
+                    type: "string"
+                  name:
+                    type: "string"
+                  description:
+                    type: "string"
+                  banner:
+                    type: "string"
+                  header_type:
+                    type: "string"
+                  header_data:
+                    type: "object"
+                    properties:
+                      type:
+                        type: "string"
+                  items_layout:
+                    type: "string"
+                  items:
+                    type: "array"
+                    items:
+                      type: "object"
+                      properties:
+                        oid:
+                          type: "string"
+                        order:
+                          type: "integer"
+                        data:
+                          type: "object"
+                  items_type:
+                    type: "string"
+                  json_file:
+                    type: "string"
+                  updated_at:
+                    type: "string"
+            example:
+              code: 0
+              data:
+                oid: "mrs-collection-100384825"
+                name: "Best Martial Art Of January"
+                description: "Have you ever felt so weak and helpless that ..."
+                banner: "https://f01.mrcdn.info/file/mrportal/i/c/o/8/dB.6pKTAFcz.jpg"
+                header_type: "story"
+                header_data:
+                  type: "story"
+                item_layout: "grid"
+                items:
+                - oid: "mrs-serie-100055928"
+                  order: 0
+                  data: null
+                item_type: "serie"
+                json_file: "https://mangarock.com/query/android401/legacy_collection?oid=mrs-collection-100384825&country=Definitive"
+                updated_at: "2019-02-27T08:12:37Z"
 parameters:
   msid:
     in: "query"
