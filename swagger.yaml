@@ -686,7 +686,7 @@ paths:
     get:
       tags:
       - "recommendation"
-      summary: "TODO"
+      summary: "list of recommended manga"
       description: ""
       parameters:
       - $ref: "#/parameters/msid"
@@ -700,32 +700,49 @@ paths:
               code:
                 $ref: "#/definitions/return-code"
               data:
-                type: "object"
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    author:
+                      type: "string"
+                    mid:
+                      type: "integer"
+                    name:
+                      type: "string"
+                    oid:
+                      type: "string"
+                    status:
+                      type: "boolean"
+                    total_chapter:
+                      type: "integer"
+            example:
+              code: 0
+              data:
+              - author: Shenjoy Animation
+                mid: 603742
+                name: Holy Ancestor
+                oid: mrs-serie-100203650
+                status: false
+                total_chapter: 191
   /rec_because_you_read_ml:
     $ref: "#/paths/~1rec_similar_series_ml"
   /rec_recommendation_ml:
     get:
       tags:
       - "recommendation"
-      summary: "TODO"
+      summary: "list of recommended manga"
       description: ""
       parameters:
       - $ref: "#/parameters/msid"
       responses:
         200:
-          description: ""
-          schema:
-            type: "object"
-            properties:
-              code:
-                $ref: "#/definitions/return-code"
-              data:
-                type: "object"
+          $ref: "#/paths/~1rec_similar_series_ml/get/responses/200"
   /rec_btrn:
     post:
       tags:
       - "recommendation"
-      summary: "TODO (best to read next)"
+      summary: "list of recommended manga"
       description: ""
       parameters:
       - $ref: "#/parameters/msid"
@@ -734,17 +751,12 @@ paths:
         200:
           description: ""
           schema:
-            type: "object"
-            properties:
-              code:
-                $ref: "#/definitions/return-code"
-              data:
-                type: "object"
+            $ref: "#/definitions/list"
   /pagesv2:
     get:
       tags:
       - "read"
-      summary: "TODO"
+      summary: "list of pages of a chapter"
       description: ""
       parameters:
       - $ref: "#/parameters/chapter-oid"
@@ -757,7 +769,14 @@ paths:
               code:
                 $ref: "#/definitions/return-code"
               data:
-                type: "object"
+                type: "array"
+                items:
+                  type: "string"
+            example:
+              code: 0
+              data:
+              - url: https://f01.mrcdn.info/file/mrfiles/j/a/c/3/J-.lQIhAChx.mri
+              - url: https://f01.mrcdn.info/file/mrfiles/j/a/c/3/JZ.hGQqQWzD.mri
   /mrs_all_character:
     post:
       tags:
